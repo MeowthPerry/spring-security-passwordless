@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface OtpRememberService {
 
-
   boolean remember(HttpServletRequest request, HttpServletResponse response, String otp);
+
+  boolean check(HttpServletRequest request);
 }

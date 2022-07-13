@@ -21,9 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class OtpAuthenticationStartFilter extends GenericFilterBean {
+public class StartFilter extends GenericFilterBean {
 
-  private Logger logger = LoggerFactory.getLogger(OtpAuthenticationStartFilter.class);
+  private Logger logger = LoggerFactory.getLogger(StartFilter.class);
 
   private final RequestMatcher startMatcher;
   private final String verifyPattern;
@@ -34,7 +34,7 @@ public class OtpAuthenticationStartFilter extends GenericFilterBean {
   @Autowired
   private OtpRememberService otpRememberService;
 
-  public OtpAuthenticationStartFilter(String startPattern, String verifyPattern) {
+  public StartFilter(String startPattern, String verifyPattern) {
     this.startMatcher = new AntPathRequestMatcher(startPattern, HttpMethod.POST.name());
     this.verifyPattern = verifyPattern;
   }
