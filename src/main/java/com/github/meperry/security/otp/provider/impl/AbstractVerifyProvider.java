@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * If the check was successful, the {@link AbstractVerifyProvider#onSuccess} method is called.
  * If the check was not successful, the {@link AbstractVerifyProvider#onFail} method is called.
+ *
+ * @author  Islam Khabibullin
  */
 public abstract class AbstractVerifyProvider implements VerifyProvider {
 
