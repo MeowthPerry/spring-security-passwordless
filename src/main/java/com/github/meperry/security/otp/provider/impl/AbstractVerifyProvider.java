@@ -7,6 +7,12 @@ import org.springframework.http.HttpStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Implementation of {@link VerifyProvider} that uses a {@link OtpRememberService} to verify the password.
+ *
+ * If the check was successful, the {@link AbstractVerifyProvider#onSuccess} method is called.
+ * If the check was not successful, the {@link AbstractVerifyProvider#onFail} method is called.
+ */
 public abstract class AbstractVerifyProvider implements VerifyProvider {
 
   private final OtpRememberService otpRememberService;

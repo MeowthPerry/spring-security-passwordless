@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Specifies that the class is used to verify a one-time password
+ * Specifies that the class is used to verify a one-time password.
  *
  * @author  Islam Khabibullin
  */

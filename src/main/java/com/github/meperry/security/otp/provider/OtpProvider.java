@@ -3,7 +3,7 @@ package com.github.meperry.security.otp.provider;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Specifies that the class can provide the user with a one-time password in a specific way
+ * Specifies that the class can provide the user with a one-time password in a specific way.
  *
  * @author  Islam Khabibullin
  */
