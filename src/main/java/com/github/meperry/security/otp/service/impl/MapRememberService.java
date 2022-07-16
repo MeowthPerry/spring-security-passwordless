@@ -5,7 +5,6 @@ import com.github.meperry.security.otp.service.OtpRememberService;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +14,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Service
 public class MapRememberService implements OtpRememberService {
 
   private Logger logger = LoggerFactory.getLogger(MapRememberService.class);
@@ -42,25 +40,31 @@ public class MapRememberService implements OtpRememberService {
   @Override
   public boolean check(HttpServletRequest request) {
     try {
-      if (!map.containsKey(getOperationId(request))) {
+      String requestBody = IOUtils.toString(request.getReader());
+      UUID operationId = getOperationId(requestBody);
+      String otp = getOtp(requestBody);
+      if (!map.containsKey(operationId)) {
         return false;
       }
-      return map.get(getOperationId(request)).equals(getOtp(request));
+      if (map.get(operationId).equals(otp)) {
+        map.remove(operationId);
+        return true;
+      }
     } catch (IOException e) {
       logger.error("Error", e);
-      return false;
     }
+    return false;
   }
 
-  private String getOtp(HttpServletRequest request) throws IOException {
+  private String getOtp(String requestBody) throws IOException {
     Map<String, Object> result =
-        objectMapper.readValue(IOUtils.toString(request.getReader()), HashMap.class);
+        objectMapper.readValue(requestBody, HashMap.class);
     return (String) result.get("otp");
   }
 
-  private UUID getOperationId(HttpServletRequest request) throws IOException {
+  private UUID getOperationId(String requestBody) throws IOException {
     Map<String, Object> result =
-        objectMapper.readValue(IOUtils.toString(request.getReader()), HashMap.class);
+        objectMapper.readValue(requestBody, HashMap.class);
     return UUID.fromString((String) result.get("operationId"));
   }
 }

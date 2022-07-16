@@ -3,7 +3,6 @@ package com.github.meperry.security.otp.filter;
 import com.github.meperry.security.otp.provider.VerifyProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -23,11 +22,11 @@ public class VerifyFilter extends GenericFilterBean {
 
   private final RequestMatcher verifyMatcher;
 
-  @Autowired
-  private VerifyProvider verifyProvider;
+  private final VerifyProvider verifyProvider;
 
-  public VerifyFilter(String verifyPattern) {
+  public VerifyFilter(String verifyPattern, VerifyProvider verifyProvider) {
     this.verifyMatcher = new AntPathRequestMatcher(verifyPattern, HttpMethod.POST.name());
+    this.verifyProvider = verifyProvider;
   }
 
   @Override

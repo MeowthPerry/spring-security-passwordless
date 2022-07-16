@@ -4,10 +4,10 @@ import com.github.meperry.security.otp.provider.OtpProvider;
 import com.github.meperry.security.otp.service.OtpRememberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.GenericFilterBean;
@@ -28,15 +28,15 @@ public class StartFilter extends GenericFilterBean {
   private final RequestMatcher startMatcher;
   private final String verifyPattern;
 
-  @Autowired
-  private List<OtpProvider> providers;
+  private final List<OtpProvider> providers;
 
-  @Autowired
-  private OtpRememberService otpRememberService;
+  private final OtpRememberService otpRememberService;
 
-  public StartFilter(String startPattern, String verifyPattern) {
+  public StartFilter(String startPattern, String verifyPattern, List<OtpProvider> providers, OtpRememberService otpRememberService) {
     this.startMatcher = new AntPathRequestMatcher(startPattern, HttpMethod.POST.name());
     this.verifyPattern = verifyPattern;
+    this.providers = providers;
+    this.otpRememberService = otpRememberService;
   }
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -48,14 +48,13 @@ public class StartFilter extends GenericFilterBean {
       String otp = providers.stream().filter(provider -> provider.supports(request)).findFirst()
           .map(provider -> provider.start(request)).orElseThrow(() -> new RuntimeException("No request supporting providers"));
       if (otpRememberService.remember(request, response, otp)) {
-        response.setStatus(HttpStatus.CONTINUE.value());
         response.addHeader(HttpHeaders.LOCATION, verifyPattern);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
       } else {
         logger.error("Failed to remember otp");
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
       }
-    } else {
-      chain.doFilter(request, response);
     }
+    chain.doFilter(request, response);
   }
 }
