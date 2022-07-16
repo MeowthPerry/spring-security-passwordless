@@ -21,7 +21,7 @@ public class SecurityConfiguration {
     OtpRememberService otpRememberService = new MapRememberService();
     http
         .csrf().disable()
-        .apply(new OtpConfigurer("/passwordless/start", "/passwordless/verify", List.of(new LogOtpProvider()), new SimpleVerifyProvider(otpRememberService)));
+        .apply(new OtpConfigurer("/passwordless/start", "/passwordless/verify", List.of(new LogOtpProvider()), otpRememberService, new SimpleVerifyProvider(otpRememberService)));
     return http.build();
   }
 }

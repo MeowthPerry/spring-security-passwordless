@@ -49,9 +49,9 @@ public class PasswordGenerator {
      * Set true in case you would like to include lower characters
      * (abc...xyz). Default false.
      *
-     * @param useLower true in case you would like to include lower
-     *                 characters (abc...xyz). Default false.
-     * @return the builder for chaining.
+     * @param useLower  true in case you would like to include lower
+     *                  characters (abc...xyz). Default false.
+     * @return          the builder for chaining.
      */
     public PasswordGeneratorBuilder useLower(boolean useLower) {
       this.useLower = useLower;
@@ -62,9 +62,9 @@ public class PasswordGenerator {
      * Set true in case you would like to include upper characters
      * (ABC...XYZ). Default false.
      *
-     * @param useUpper true in case you would like to include upper
-     *                 characters (ABC...XYZ). Default false.
-     * @return the builder for chaining.
+     * @param useUpper  true in case you would like to include upper
+     *                  characters (ABC...XYZ). Default false.
+     * @return          the builder for chaining.
      */
     public PasswordGeneratorBuilder useUpper(boolean useUpper) {
       this.useUpper = useUpper;
@@ -77,7 +77,7 @@ public class PasswordGenerator {
      *
      * @param useDigits true in case you would like to include digit
      *                  characters (123..). Default false.
-     * @return the builder for chaining.
+     * @return          the builder for chaining.
      */
     public PasswordGeneratorBuilder useDigits(boolean useDigits) {
       this.useDigits = useDigits;
@@ -88,9 +88,9 @@ public class PasswordGenerator {
      * Set true in case you would like to include punctuation characters
      * (!@#..). Default false.
      *
-     * @param usePunctuation true in case you would like to include
-     *                       punctuation characters (!@#..). Default false.
-     * @return the builder for chaining.
+     * @param usePunctuation  true in case you would like to include
+     *                        punctuation characters (!@#..). Default false.
+     * @return                the builder for chaining.
      */
     public PasswordGeneratorBuilder usePunctuation(boolean usePunctuation) {
       this.usePunctuation = usePunctuation;
@@ -100,8 +100,7 @@ public class PasswordGenerator {
     /**
      * Get an object to use.
      *
-     * @return the {@link com.github.meperry.security.otp.util.PasswordGenerator}
-     * object.
+     * @return the {@link com.github.meperry.security.otp.util.PasswordGenerator} object.
      */
     public PasswordGenerator build() {
       return new PasswordGenerator(this);
@@ -113,9 +112,9 @@ public class PasswordGenerator {
    * define. It will use the categories with a probability. It is not sure
    * that all of the defined categories will be used.
    *
-   * @param length the length of the password you would like to generate.
-   * @return a password that uses the categories you define when constructing
-   * the object with a probability.
+   * @param length  the length of the password you would like to generate.
+   * @return        a password that uses the categories you define when constructing
+   *                the object with a probability.
    */
   public String generate(int length) {
     // Argument Validation.

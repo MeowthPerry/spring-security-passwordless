@@ -30,9 +30,4 @@ public abstract class AbstractVerifyProvider implements VerifyProvider {
   }
 
   protected abstract void onSuccess(HttpServletRequest request, HttpServletResponse response);
-
-  @Override
-  public OtpRememberService getOtpRememberService() {
-    return otpRememberService;
-  }
 }

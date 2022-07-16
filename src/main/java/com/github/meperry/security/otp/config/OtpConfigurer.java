@@ -21,11 +21,11 @@ public class OtpConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilt
   private final OtpRememberService otpRememberService;
   private final VerifyProvider verifyProvider;
 
-  public OtpConfigurer(String startPattern, String tokenPattern, List<OtpProvider> providers, VerifyProvider verifyProvider) {
+  public OtpConfigurer(String startPattern, String tokenPattern, List<OtpProvider> providers, OtpRememberService otpRememberService, VerifyProvider verifyProvider) {
     this.startPattern = startPattern;
     this.verifyPattern = tokenPattern;
     this.providers = providers;
-    this.otpRememberService = verifyProvider.getOtpRememberService();
+    this.otpRememberService = otpRememberService;
     this.verifyProvider = verifyProvider;
   }
 
