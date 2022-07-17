@@ -31,7 +31,7 @@ public class VerifyFilter extends GenericFilterBean {
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-    this.doFilter((HttpServletRequest)request, (HttpServletResponse)response, chain);
+    this.doFilter((HttpServletRequest) request, (HttpServletResponse) response, chain);
   }
 
   private void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
