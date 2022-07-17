@@ -14,9 +14,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class MapRememberService implements OtpRememberService {
+public class InMemoryRememberService implements OtpRememberService {
 
-  private Logger logger = LoggerFactory.getLogger(MapRememberService.class);
+  private Logger logger = LoggerFactory.getLogger(InMemoryRememberService.class);
 
   Map<UUID, String> map = new HashMap<>();
 

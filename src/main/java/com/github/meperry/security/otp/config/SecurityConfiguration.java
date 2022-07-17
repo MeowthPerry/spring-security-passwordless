@@ -3,7 +3,7 @@ package com.github.meperry.security.otp.config;
 import com.github.meperry.security.otp.provider.impl.LogOtpProvider;
 import com.github.meperry.security.otp.provider.impl.SimpleVerifyProvider;
 import com.github.meperry.security.otp.service.OtpRememberService;
-import com.github.meperry.security.otp.service.impl.MapRememberService;
+import com.github.meperry.security.otp.service.impl.InMemoryRememberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,7 +18,7 @@ public class SecurityConfiguration {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    OtpRememberService otpRememberService = new MapRememberService();
+    OtpRememberService otpRememberService = new InMemoryRememberService();
     http
         .csrf().disable()
         .apply(new OtpConfigurer("/passwordless/start", "/passwordless/verify", List.of(new LogOtpProvider()), otpRememberService, new SimpleVerifyProvider(otpRememberService)));
