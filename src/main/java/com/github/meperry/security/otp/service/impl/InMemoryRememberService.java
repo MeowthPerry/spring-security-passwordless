@@ -2,6 +2,7 @@ package com.github.meperry.security.otp.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.meperry.security.otp.service.OtpRememberService;
+import com.github.meperry.security.otp.util.JsonRequestBodyParser;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +20,6 @@ public class InMemoryRememberService implements OtpRememberService {
   private Logger logger = LoggerFactory.getLogger(InMemoryRememberService.class);
 
   Map<UUID, String> map = new HashMap<>();
-
-  private final ObjectMapper objectMapper = new ObjectMapper();
 
   @Override
   public boolean remember(HttpServletRequest request, HttpServletResponse response, String otp) {
@@ -40,9 +39,8 @@ public class InMemoryRememberService implements OtpRememberService {
   @Override
   public boolean check(HttpServletRequest request) {
     try {
-      String requestBody = IOUtils.toString(request.getReader());
-      UUID operationId = getOperationId(requestBody);
-      String otp = getOtp(requestBody);
+      UUID operationId = getOperationId(request);
+      String otp = getOtp(request);
       if (!map.containsKey(operationId)) {
         return false;
       }
@@ -56,15 +54,11 @@ public class InMemoryRememberService implements OtpRememberService {
     return false;
   }
 
-  private String getOtp(String requestBody) throws IOException {
-    Map<String, Object> result =
-        objectMapper.readValue(requestBody, HashMap.class);
-    return (String) result.get("otp");
+  private String getOtp(HttpServletRequest request) throws IOException {
+    return (String) JsonRequestBodyParser.get(request, "otp");
   }
 
-  private UUID getOperationId(String requestBody) throws IOException {
-    Map<String, Object> result =
-        objectMapper.readValue(requestBody, HashMap.class);
-    return UUID.fromString((String) result.get("operationId"));
+  private UUID getOperationId(HttpServletRequest request) throws IOException {
+    return UUID.fromString((String) JsonRequestBodyParser.get(request, "operationId"));
   }
 }
